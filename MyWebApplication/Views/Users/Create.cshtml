@@ -1,0 +1,72 @@
+@model MyWebApplication.Models.User
+
+@{
+    ViewData["Title"] = "Создание нового пользователя";
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Добавление пользователя</h1>
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-2"></i>Назад к списку
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-success text-white py-3">
+                    <h5 class="mb-0">
+                        <i class="bi bi-person-plus me-2"></i>
+                        Новый пользователь
+                    </h5>
+                </div>
+
+                <div class="card-body p-4 p-md-5">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4" role="alert"></div>
+
+                        <div class="mb-4">
+                            <label asp-for="Name" class="form-label fw-medium">
+                                Имя <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Name" class="form-control form-control-lg"
+                                   placeholder="Введите полное имя" autocomplete="name" />
+                            <span asp-validation-for="Name" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Email" class="form-label fw-medium">
+                                Email <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Email" type="email" class="form-control form-control-lg"
+                                   placeholder="example@mail.ru" autocomplete="email" />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="DateOfBirth" class="form-label fw-medium">
+                                Дата рождения <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="DateOfBirth" type="date" class="form-control form-control-lg" />
+                            <span asp-validation-for="DateOfBirth" class="text-danger small"></span>
+                        </div>
+
+                        <div class="d-grid d-md-flex gap-3">
+                            <button type="submit" class="btn btn-success btn-lg px-5">
+                                <i class="bi bi-check-circle me-2"></i>Создать пользователя
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg px-5 mt-3 mt-md-0">
+                                <i class="bi bi-x-circle me-2"></i>Отмена
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
