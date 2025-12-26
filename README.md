@@ -1,1 +1,2 @@
-# MyWebApplication
+# Это современное веб-приложение для управления контактами и телефонными номерами.
+<img width="1440" height="808" alt="Снимок экрана 2025-12-26 в 16 56 50" src="https://github.com/user-attachments/assets/4ca2b8fb-e154-47c3-8829-330ce8c1a904" />
