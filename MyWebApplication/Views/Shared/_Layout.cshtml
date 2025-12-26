@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MyWebApplication.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100 bg-light">
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
             <div class="container-fluid">
@@ -63,18 +63,25 @@
         </nav>
     </header>
 
-    <div class="container my-4">
+    <div class="container my-4 flex-grow-1">
         <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted py-4 mt-5">
-        <div class="container text-center">
-            &copy; 2025 — <strong>Мои контакты</strong> — 
-            <a asp-controller="Home" asp-action="Privacy">Конфиденциальность</a>
+<footer class="bg-white border-top py-4 mt-auto shadow-sm">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start text-secondary">
+                <span class="small">&copy; 2025 — <span class="fw-bold text-primary">Мои контакты</span></span>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <a asp-controller="Home" asp-action="Privacy" class="text-decoration-none small link-secondary mx-2">Конфиденциальность</a>
+                <a href="#" class="text-decoration-none small link-secondary mx-2">Помощь</a>
+            </div>
         </div>
-    </footer>
+    </div>
+</footer>
 
     <!-- Скрипты -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
