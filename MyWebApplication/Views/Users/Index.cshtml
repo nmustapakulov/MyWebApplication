@@ -4,23 +4,32 @@
     ViewData["Title"] = "Список пользователей";
 }
 
-<div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Список пользователей</h1>
-        <a asp-action="Create" class="btn btn-success btn-lg">
-            <i class="bi bi-plus-circle me-2"></i>Добавить пользователя
-        </a>
+<!-- Использование container-fluid на мобильных дает больше места для таблицы -->
+<div class="container-fluid container-md mt-4">
+    
+    <!-- Шапка: на мобильных (col-12) элементы встают друг под друга и центрируются -->
+    <div class="row align-items-center mb-4">
+        <div class="col-12 col-md-6 text-center text-md-start mb-3 mb-md-0">
+            <h1 class="h3 mb-0 text-gray-800 fw-bold">Список пользователей</h1>
+        </div>
+        <div class="col-12 col-md-6 text-center text-md-end">
+            <!-- w-100 делает кнопку на весь экран на мобильном для удобства нажатия пальцем -->
+            <a asp-action="Create" class="btn btn-success w-100 w-md-auto shadow-sm">
+                <i class="bi bi-plus-circle me-2"></i>Добавить
+            </a>
+        </div>
     </div>
 
-    <div class="card shadow-sm border-0">
+    <div class="card shadow-sm border-0 rounded-3 overflow-hidden">
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover mb-0 align-middle">
-                    <thead class="table-light">
+                    <thead class="table-light text-secondary small">
                         <tr>
-                            <th class="ps-4">Имя</th>
-                            <th>Email</th>
-                            <th>Дата рождения</th>
+                            <th class="ps-4 py-3">Имя</th>
+                            <!-- Скрываем отдельную колонку Email на экранах меньше 576px (d-none d-sm-table-cell) -->
+                            <th class="d-none d-sm-table-cell">Email</th>
+                            <th>Дата</th>
                             <th class="text-end pe-4">Действия</th>
                         </tr>
                     </thead>
@@ -29,8 +38,8 @@
                         {
                             <tr>
                                 <td colspan="4" class="text-center py-5 text-muted">
-                                    <i class="bi bi-people display-4 d-block mb-3 opacity-50"></i>
-                                    <p class="mb-0">Пользователей пока нет</p>
+                                    <i class="bi bi-people display-4 d-block mb-3 opacity-25"></i>
+                                    <p>Пользователей пока нет</p>
                                 </td>
                             </tr>
                         }
@@ -39,25 +48,48 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td class="ps-4 fw-medium">
-                                        <i class="bi bi-person me-2 text-primary"></i>
-                                        @Html.DisplayFor(m => item.Name)
+                                    <td class="ps-4">
+                                        <div class="d-flex align-items-center">
+                                            <!-- Аватар виден только на десктопах (d-md-flex) -->
+                                            <div class="avatar-sm d-none d-md-flex me-2 bg-primary bg-opacity-10 text-primary rounded-circle align-items-center justify-content-center" style="width: 32px; height: 32px; flex-shrink: 0;">
+                                                @item.Name.ToString().Substring(0,1).ToUpper()
+                                            </div>
+                                            <div>
+                                                <div class="fw-bold text-dark">@item.Name</div>
+                                                <!-- На мобильных показываем email прямо под именем (d-block d-sm-none) -->
+                                                <div class="d-block d-sm-none small text-muted text-truncate" style="max-width: 140px;">
+                                                    @item.Email
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
-                                    <td>
-                                        <a href="mailto:@item.Email" class="text-decoration-none">
-                                            @Html.DisplayFor(m => item.Email)
+                                    <!-- Эта колонка исчезает на мобильных, так как мы вывели email выше -->
+                                    <td class="d-none d-sm-table-cell">
+                                        <a href="mailto:@item.Email" class="text-decoration-none small text-truncate d-inline-block" style="max-width: 150px;">
+                                            @item.Email
                                         </a>
                                     </td>
-                                    <td>
+                                    <!-- text-nowrap запрещает дате разбиваться на две строки -->
+                                    <td class="text-nowrap small">
                                         @Html.DisplayFor(modelItem => item.DateOfBirth)
                                     </td>
                                     <td class="text-end pe-4">
-                                        <a asp-action="Edit" asp-route-id="@item.Id"
-                                           class="btn btn-warning btn-sm">Изменить</a>
-                                        <a asp-action="Details" asp-route-id="@item.Id"
-                                           class="btn btn-info btn-sm text-white">Инфо</a>
-                                        <a asp-action="Delete" asp-route-id="@item.Id"
-                                           class="btn btn-danger btn-sm">Удалить</a>
+                                        <!-- Группируем кнопки, чтобы они не «разлетались» -->
+                                        <div class="btn-group shadow-sm">
+                                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm" title="Изменить">
+                                                <i class="bi bi-pencil text-dark"></i>
+                                                <!-- Скрываем текст на планшетах и телефонах, оставляем только иконку -->
+                                                <span class="d-none d-lg-inline ms-1 text-dark">Изменить</span>
+                                            </a>
+                                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm text-white" title="Инфо">
+                                                <i class="bi bi-info-circle"></i>
+                                                <span class="d-none d-lg-inline ms-1">Инфо</span>
+                                            </a>
+                                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" title="Удалить">
+                                                <i class="bi bi-trash"></i>
+                                                <span class="d-none d-lg-inline ms-1">Удалить</span>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             }
