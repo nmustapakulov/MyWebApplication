@@ -1,0 +1,36 @@
+@model IEnumerable<MyWebApplication.Models.User>
+
+<div class="container mt-4" style="max-width: 800px;">
+    <!-- Заголовок со счетчиком -->
+    <div class="border-bottom pb-3 mb-4">
+        <h1 class="h4 fw-normal text-secondary">
+            Контакты <span class="ms-2 text-muted">(@Model.Count())</span>
+        </h1>
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-3">
+        <table class="table table-hover mb-0 align-middle">
+            <thead class="bg-light small text-uppercase text-muted">
+            <tr>
+                <th class="ps-4 py-3">Имя</th>
+                <th>Эл. почта</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var user in Model) {
+                <tr style="cursor: pointer;" onclick="location.href='@Url.Action("ContactDetails", "Home", new { id = user.Id })'">
+                    <td class="ps-4">
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center me-3" style="width: 35px; height: 35px;">
+                                @user.Name.Substring(0,1).ToUpper()
+                            </div>
+                            <span class="fw-bold text-primary text-decoration-none">@user.Name</span>
+                        </div>
+                    </td>
+                    <td class="text-secondary">@user.Email</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

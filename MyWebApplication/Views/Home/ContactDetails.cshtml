@@ -1,0 +1,58 @@
+@model MyWebApplication.Models.User
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container mt-5" style="max-width: 600px;">
+    <a asp-action="AllContacts" class="btn btn-link text-decoration-none p-0 mb-4">
+        <i class="bi bi-arrow-left"></i> Назад к списку
+    </a>
+
+    <div class="text-center mb-5">
+        <div class="display-1 bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 120px; height: 120px;">
+            @Model.Name.Substring(0,1).ToUpper()
+        </div>
+        <h2 class="fw-bold">@Model.Name</h2>
+        <p class="text-muted">Контактные данные</p>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+            <!-- Секция Телефонов -->
+            <div class="mb-4">
+                <label class="small text-muted text-uppercase fw-bold">Номера телефонов</label>
+                @if (Model.Phones != null && Model.Phones.Any()) {
+                    @foreach (var phone in Model.Phones) {
+                        <div class="d-flex align-items-center my-3">
+                            <i class="bi bi-telephone-fill text-success me-3 fs-4"></i>
+                            <span class="fs-5">@phone.PhoneNumber</span>
+                        </div>
+                    }
+                } else {
+                    <p class="text-muted mt-2">Номера не добавлены</p>
+                }
+            </div>
+
+            <hr class="text-muted opacity-25">
+
+            <!-- Секция Почты -->
+            <div class="mb-4">
+                <label class="small text-muted text-uppercase fw-bold">Электронная почта</label>
+                <div class="d-flex align-items-center my-2">
+                    <i class="bi bi-envelope-at text-primary me-3 fs-5"></i>
+                    <a href="mailto:@Model.Email" class="text-decoration-none text-dark">@Model.Email</a>
+                </div>
+            </div>
+
+            <!-- Секция Даты рождения -->
+            <div>
+                <label class="small text-muted text-uppercase fw-bold">Дата рождения</label>
+                <div class="d-flex align-items-center my-2">
+                    <i class="bi bi-calendar-event text-secondary me-3 fs-5"></i>
+                    <span>@Model.DateOfBirth?.ToString("dd MMMM yyyy")</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
